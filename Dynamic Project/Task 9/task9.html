@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Grade Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        input {
+            width: 200px;
+            padding: 10px;
+            margin: 15px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        p {
+            font-size: 18px;
+            color: #333;
+        }
+
+        #grade {
+            font-weight: bold;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Grade Calculator</h2>
+        <input type="number" id="score" min="0" max="100" oninput="calculateGrade()" placeholder="Enter score">
+        <p>Your grade is: <span id="grade">-</span></p>
+    </div>
+
+    <script>
+        function calculateGrade() {
+            let score = document.getElementById('score').value;
+            let grade;
+
+            if (score >= 80) {
+                grade = 'A';
+            } else if (score >= 60) {
+                grade = 'B';
+            } else if (score >= 40) {
+                grade = 'C';
+            } else {
+                grade = 'F';
+            }
+
+            document.getElementById('grade').textContent = grade;
+        }
+    </script>
+
+</body>
+</html>

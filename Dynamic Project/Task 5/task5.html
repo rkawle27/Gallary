@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f4f4f4;
+            }
+
+            #container {
+                text-align: center;
+                background: white;
+                padding: 20px;
+                border-radius: 8px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+
+            input {
+                width: 250px;
+                padding: 10px;
+                margin: 10px 0;
+                font-size: 16px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+            }
+
+            button {
+                width: 150px;
+                padding: 8px;
+                font-size: 14px;
+                background-color: #dc4a98;
+                color: white;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin: 5px;
+            }
+
+            button:hover {
+                background-color: #e6409e;
+            }
+
+            .button_div {
+                margin-top: 10px;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div id="container">
+            <div class="input_div">
+                <input placeholder="Enter the value of X" id="num1"/>
+                <input placeholder="Enter the value of Y" id="num2"/>
+                <input placeholder="Result will appear here" id="res" disabled/>
+            </div>
+
+            <div class="button_div">
+                <button onclick="add()">Addition (X + Y)</button>
+                <button onclick="sub()">Subtraction (X - Y)</button>
+                <button onclick="mul()">Multiplication (X * Y)</button>
+                <button onclick="div()">Division (X / Y)</button>
+            </div>            
+        </div>
+
+        <script>
+            function add(){
+                x = parseInt(document.getElementById("num1").value);
+                y = parseInt(document.getElementById("num2").value);
+                result = x + y;
+                document.getElementById("res").value = result;
+            }
+
+            function sub(){
+                x = parseInt(document.getElementById("num1").value);
+                y = parseInt(document.getElementById("num2").value);
+                result = x - y;
+                document.getElementById("res").value = result;
+            }
+
+            function mul(){
+                x = parseInt(document.getElementById("num1").value);
+                y = parseInt(document.getElementById("num2").value);
+                result = x * y;
+                document.getElementById("res").value = result;
+            }
+
+            function div(){
+                x = parseInt(document.getElementById("num1").value);
+                y = parseInt(document.getElementById("num2").value);
+                result = x / y;
+                document.getElementById("res").value = result;
+            }
+        </script>
+
+    </body>
+</html>

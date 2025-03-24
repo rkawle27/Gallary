@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Information Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150vh;
+            width: 80w;
+        }
+
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+        }
+
+        h1 {
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="text"]:focus, input[type="number"]:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            background-color: #df3177;
+            color: rgb(92, 89, 89);
+            padding: 10px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #ce2c82;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+        }
+
+        .button-container button {
+            width: 48%;
+        }
+
+        .student-list div {
+            background-color: #f1f1f1;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 4px;
+            text-align: left;
+        }
+
+        .student-list button {
+            background-color: #28a745;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .student-list button:hover {
+            background-color: #218838;
+        }
+
+        .no-students, .no-selection {
+            font-size: 16px;
+            color: #666;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 8px;
+            font-size: 14px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Student Information</h1>
+
+        <div class="form-group">
+            <input type="text" id="name" placeholder="Enter student name">
+        </div>
+
+        <div class="form-group">
+            <input type="number" id="age" placeholder="Enter age">
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="grade" placeholder="Enter grade">
+        </div>
+
+        <div class="form-group">
+            <input type="text" id="course" placeholder="Enter course">
+        </div>
+
+        <div class="button-container">
+            <button onclick="addOrUpdateStudentInfo()">Insert Info</button>
+            <button onclick="clearAllInputs()">Clear All</button>
+        </div>
+
+        <div class="button-container">
+            <button onclick="showAllStudents()">Show All</button>
+            <button onclick="clearStudentList()">Clear Display</button>
+        </div>
+
+        <input type="text" class="search-bar" id="searchBar" placeholder="Search students..." onkeyup="searchStudents()">
+
+        <h2>All Student Information</h2>
+        <div id="student-list" class="student-list">
+            <p class="no-students">No students added yet.</p>
+        </div>
+
+        <h2>Show Student Info</h2>
+        <div id="show-student-info" class="student-info">
+            <p class="no-selection">No student selected.</p>
+        </div>
+    </div>
+
+    <script>
+        class Student {
+            constructor(name, age, grade, course) {
+                this.name = name;
+                this.age = age;
+                this.grade = grade;
+                this.course = course;
+            }
+        }
+
+        let students = [];
+        let currentStudentIndex = -1;
+
+        function addOrUpdateStudentInfo() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const grade = document.getElementById('grade').value;
+            const course = document.getElementById('course').value;
+
+            if (!name || !age || !grade || !course) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const student = new Student(name, age, grade, course);
+
+            if (currentStudentIndex === -1) {
+                students.push(student);
+            } else {
+                students[currentStudentIndex] = student;
+                currentStudentIndex = -1;
+            }
+
+            document.getElementById('name').value = '';
+            document.getElementById('age').value = '';
+            document.getElementById('grade').value = '';
+            document.getElementById('course').value = '';
+
+            displayStudentList();
+        }
+
+        function displayStudentList() {
+            const studentListDiv = document.getElementById('student-list');
+            studentListDiv.innerHTML = '';
+
+            if (students.length === 0) {
+                studentListDiv.innerHTML = '<p class="no-students">No students added yet.</p>';
+            } else {
+                students.forEach((student, index) => {
+                    const studentInfo = `
+                        <div>
+                            <strong>Student ${index + 1}:</strong><br>
+                            <strong>Name:</strong> ${student.name} <br>
+                            <strong>Age:</strong> ${student.age} <br>
+                            <strong>Grade:</strong> ${student.grade} <br>
+                            <strong>Course:</strong> ${student.course} <br>
+                            <button onclick="editStudent(${index})">Edit</button>
+                            <button onclick="showStudentInfo(${index})">Show Info</button><br><br>
+                        </div>
+                    `;
+                    studentListDiv.innerHTML += studentInfo;
+                });
+            }
+        }
+
+        function editStudent(index) {
+            currentStudentIndex = index;
+
+            const student = students[index];
+            document.getElementById('name').value = student.name;
+            document.getElementById('age').value = student.age;
+            document.getElementById('grade').value = student.grade;
+            document.getElementById('course').value = student.course;
+        }
+
+        function showStudentInfo(index) {
+            const student = students[index];
+
+            const studentInfo = `
+                <div>
+                    <strong>Name:</strong> ${student.name} <br>
+                    <strong>Age:</strong> ${student.age} <br>
+                    <strong>Grade:</strong> ${student.grade} <br>
+                    <strong>Course:</strong> ${student.course}
+                </div>
+            `;
+
+            document.getElementById('show-student-info').innerHTML = studentInfo;
+        }
+
+        function clearAllInputs() {
+            document.getElementById('name').value = '';
+            document.getElementById('age').value = '';
+            document.getElementById('grade').value = '';
+            document.getElementById('course').value = '';
+        }
+
+        function clearStudentList() {
+            students = [];
+            displayStudentList();
+            document.getElementById('show-student-info').innerHTML = '<p class="no-selection">No student selected.</p>';
+        }
+
+        function showAllStudents() {
+            displayStudentList();
+        }
+
+        function searchStudents() {
+            const searchQuery = document.getElementById('searchBar').value.toLowerCase();
+            const filteredStudents = students.filter(student => {
+                return (
+                    student.name.toLowerCase().includes(searchQuery) ||
+                    student.age.toString().includes(searchQuery) ||
+                    student.grade.toLowerCase().includes(searchQuery) ||
+                    student.course.toLowerCase().includes(searchQuery)
+                );
+            });
+            displayFilteredStudentList(filteredStudents);
+        }
+
+        function displayFilteredStudentList(filteredStudents) {
+            const studentListDiv = document.getElementById('student-list');
+            studentListDiv.innerHTML = '';
+
+            if (filteredStudents.length === 0) {
+                studentListDiv.innerHTML = '<p class="no-students">No matching students found.</p>';
+            } else {
+                filteredStudents.forEach((student, index) => {
+                    const studentInfo = `
+                        <div>
+                            <strong>Student ${index + 1}:</strong><br>
+                            <strong>Name:</strong> ${student.name} <br>
+                            <strong>Age:</strong> ${student.age} <br>
+                            <strong>Grade:</strong> ${student.grade} <br>
+                            <strong>Course:</strong> ${student.course} <br>
+                            <button onclick="editStudent(${index})">Edit</button>
+                            <button onclick="showStudentInfo(${index})">Show Info</button><br><br>
+                        </div>
+                    `;
+                    studentListDiv.innerHTML += studentInfo;
+                });
+            }
+        }
+    </script>
+
+</body>
+</html>

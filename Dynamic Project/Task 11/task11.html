@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 250px;
+            margin: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #demo {
+            margin-top: 20px;
+            font-size: 20px;
+            white-space: pre-line;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <input placeholder="Enter a positive number" id="input" onkeyup="grade_update()"/>
+        <div id="demo"></div>
+    </div>
+
+    <script>
+        function grade_update() {
+            let text = "";
+            let n = parseFloat(document.getElementById("input").value);
+
+            if (n && n > 0) { // Check if input is a valid positive number
+                for (let i = 0; i <= n; i++) {
+                    for (let j = 0; j < i; j++) {
+                        text += "* ";
+                    }
+                    text += "<br>";
+                }
+            } else {
+                text = "Please enter a valid positive number.";
+            }
+
+            document.getElementById('demo').innerHTML = text;
+        }
+    </script>
+
+</body>
+</html>

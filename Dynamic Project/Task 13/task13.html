@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Information Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 150vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 350px;
+            text-align: left;
+        }
+
+        h1, h2 {
+            color: #333;
+        }
+
+        div {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-size: 16px;
+            margin-bottom: 5px;
+            color: #555;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 100%;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #e94e8e;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px 0;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #student-list {
+            margin-top: 20px;
+            text-align: left;
+        }
+
+        #show-student-info {
+            margin-top: 20px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        #student-list div {
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        #student-list button {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Student Information</h1>
+
+        <div>
+            <label for="name">Student Name:</label>
+            <input type="text" id="name" placeholder="Enter student name">
+        </div>
+
+        <div>
+            <label for="age">Age:</label>
+            <input type="number" id="age" placeholder="Enter age">
+        </div>
+
+        <div>
+            <label for="grade">Grade:</label>
+            <input type="text" id="grade" placeholder="Enter grade">
+        </div>
+
+        <div>
+            <label for="course">Course:</label>
+            <input type="text" id="course" placeholder="Enter course">
+        </div>
+
+        <button onclick="addOrUpdateStudentInfo()">Insert Info</button>
+
+        <h2>All Student Information</h2>
+        <div id="student-list">
+            <p>No students added yet.</p>
+        </div>
+
+        <h2>Show Student Info</h2>
+        <div id="show-student-info">
+            <p>No student selected.</p>
+        </div>
+    </div>
+
+    <script>
+        let students = [];
+        let currentStudentIndex = -1;
+
+        function addOrUpdateStudentInfo() {
+            const name = document.getElementById('name').value;
+            const age = document.getElementById('age').value;
+            const grade = document.getElementById('grade').value;
+            const course = document.getElementById('course').value;
+
+            if (!name || !age || !grade || !course) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const student = {
+                name: name,
+                age: age,
+                grade: grade,
+                course: course
+            };
+
+            if (currentStudentIndex === -1) {
+                students.push(student);
+            } else {
+                students[currentStudentIndex] = student;
+                currentStudentIndex = -1;
+            }
+
+            document.getElementById('name').value = '';
+            document.getElementById('age').value = '';
+            document.getElementById('grade').value = '';
+            document.getElementById('course').value = '';
+
+            displayStudentList();
+        }
+
+        function displayStudentList() {
+            const studentListDiv = document.getElementById('student-list');
+            studentListDiv.innerHTML = '';
+
+            if (students.length === 0) {
+                studentListDiv.innerHTML = '<p>No students added yet.</p>';
+            } else {
+                students.forEach((student, index) => {
+                    const studentInfo = `
+                        <div>
+                            <strong>Student ${index + 1}:</strong><br>
+                            <strong>Name:</strong> ${student.name} <br>
+                            <strong>Age:</strong> ${student.age} <br>
+                            <strong>Grade:</strong> ${student.grade} <br>
+                            <strong>Course:</strong> ${student.course} <br>
+                            <button onclick="editStudent(${index})">Edit</button>
+                            <button onclick="showStudentInfo(${index})">Show Info</button><br><br>
+                        </div>
+                    `;
+                    studentListDiv.innerHTML += studentInfo;
+                });
+            }
+        }
+
+        function editStudent(index) {
+            currentStudentIndex = index;
+            const student = students[index];
+            document.getElementById('name').value = student.name;
+            document.getElementById('age').value = student.age;
+            document.getElementById('grade').value = student.grade;
+            document.getElementById('course').value = student.course;
+        }
+
+        function showStudentInfo(index) {
+            const student = students[index];
+            const studentInfo = `
+                <div>
+                    <strong>Name:</strong> ${student.name} <br>
+                    <strong>Age:</strong> ${student.age} <br>
+                    <strong>Grade:</strong> ${student.grade} <br>
+                    <strong>Course:</strong> ${student.course}
+                </div>
+            `;
+            document.getElementById('show-student-info').innerHTML = studentInfo;
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            width: 250px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 10px;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #output {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <input type="number" placeholder="Enter beginning" id="Enter A" required><br>
+        <input type="number" placeholder="Enter finish" id="Enter B" required><br>
+        <button onclick="calculateSum()">Generate</button>
+        <div id="output"></div>
+    </div>
+
+    <script>
+        const colors = ["red", "green", "blue", "orange"];
+        let idx = 0;
+
+        function calculateSum() {
+            let begin = parseInt(document.getElementById('Enter A').value);
+            let finish = parseInt(document.getElementById('Enter B').value);
+            let sum = 0;
+            let i = begin;
+
+            do {
+                if (begin > finish) break;
+                sum += i;
+                i++;
+            } while (i <= finish);
+
+            document.getElementById('output').textContent = "Sum between " + begin + " and " + finish + " is: " + sum;
+            document.getElementById('output').style.color = colors[idx];
+            idx = (idx + 1) % colors.length;
+        }
+    </script>
+
+</body>
+</html>

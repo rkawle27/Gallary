@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Left Aligned Star Triangle Generator</title>
+    <style>
+       
+    </style>
+</head>
+<body>
+        <input  id="rows" placeholder="Enter a positive number" onkeyup="generateStarTriangle()">
+        <div id="output" ></div>
+   
+
+    <script>
+        const colors = ["red","green","blue","orange"];
+        let idx = 0;
+
+        function generateStarTriangle() {
+            let text = "";
+            let n = parseInt(document.getElementById('rows').value);
+           
+            for (let i = 1; i <= n; i++) {
+                for (let j = 1; j <= i; j++) {
+                    text += "* ";
+                }
+                text += "<br>";
+            }
+
+            document.getElementById('output').innerHTML = text;
+            document.getElementById('output').style="color :"+colors[idx];
+            idx = (idx + 1) % colors.length;  
+        }
+    </script>
+</body>
+</html>

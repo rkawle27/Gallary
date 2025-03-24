@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text to Uppercase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input {
+            width: 250px;
+            padding: 10px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        input:disabled {
+            background-color: #f0f0f0;
+        }
+
+    </style>
+    <script>
+        function update() {
+            let txt = document.getElementById("input").value;
+            let output = txt.toUpperCase();
+            document.getElementById("output").value = output;
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <input placeholder="Enter some text here" id="input" onkeyup="update()" />
+        <input placeholder="Output will appear here" id="output" disabled />
+    </div>
+</body>
+</html>
